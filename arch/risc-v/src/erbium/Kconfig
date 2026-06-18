@@ -1,0 +1,28 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config ARCH_CHIP_ERBIUM_MINION
+	bool "AIFoundry Erbium Minion"
+	default y
+	depends on ARCH_CHIP_ERBIUM
+	---help---
+		Erbium minion hart: RV64IMFC, machine timer, and SiFive-style PLIC.
+
+config ERBIUM_SIMULATOR
+	bool "AIFoundry Erbium ET-platform simulator"
+	default y if ARCH_BOARD_ERBIUM_MINION
+	select ARCH_IDLE_CUSTOM
+	---help---
+		Enable workarounds needed by the ET-platform simulator. Simulator
+		builds keep the idle loop runnable instead of executing WFI.
+		The ET-platform Erbium simulator and silicon both provide PLIC MMIO.
+
+config ERBIUM_PLIC
+	bool "Erbium platform-level interrupt controller"
+	default y
+	---help---
+		Enable the Erbium platform-level interrupt controller for external
+		interrupts. Disable this only for early bring-up on models without
+		the Erbium PLIC register block.
